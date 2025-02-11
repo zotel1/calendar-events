@@ -5,7 +5,7 @@
 @if (showButtons) {
     <section>
         @if (isAuthenticated) {
-            <button mat-button color="warn">Cerrar Sesión</button>
+            <button mat-button color="warn" (click)="authService.logout()">Cerrar Sesión</button>
         } @else {
         <button mat-button color="primary" (click)="authService.loginWithRedirect()">Iniciar sesión</button>
         }

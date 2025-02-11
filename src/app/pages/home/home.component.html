@@ -1,7 +1,18 @@
 <section>
     <p>Bienvenido</p>
-    <div>
-        <button mat-button color="primary" routerLink="calendar">Evento</button>
-        <button mat-button color="warn" routerLink="profile">Perfil</button>
-    </div>
+
+    @if (isLoaded) {
+        <section>
+            @if (user) {
+                <span>{{user.nickname}}</span>
+            <div>
+                <button mat-button color="primary" routerLink="calendar">Evento</button>
+                <button mat-button color="warn" routerLink="profile">Perfil</button>
+            </div>
+            } @else {
+                <button mat-button color="primary" (click)="authService.loginWithRedirect()">Iniciar sesión</button>
+            }
+        </section>
+    }
+    
 </section>>
