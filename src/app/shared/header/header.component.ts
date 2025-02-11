@@ -10,7 +10,17 @@ import { AuthService } from '@auth0/auth0-angular'
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+
+  showButtons = false;
+
+  isAuthenticated = false;
+
   constructor(
     public authService: AuthService
-  ){}
+  ){
+    this.authService.isAuthenticated$.subscribe(val => {
+      this.showButtons = true;
+      this.isAuthenticated = val;
+    });
+  }
 }
