@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { NCalendar } from '../../model/calendar.model';
 
 @Component({
   selector: 'app-calendar',
@@ -9,8 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class CalendarComponent {
 
+  headers: NCalendar.Header = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+  calendarData = new Array(42).fill(1);
+
   openModal(){
-    
+
   }
 
 }

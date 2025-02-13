@@ -1,4 +1,15 @@
 <section class="calendar-container">
+    
     <button mat-button color="primary" (click)="openModal()">Agregar evento</button>
+
+    <article class="calendar-content">
+        @for (header of headers; track header) {
+            <span>{{header}}</span>
+        }
+
+        @for (item of calendarData; track item) {
+            <div>{{item}}</div>
+        }
+    </article>
 
 </section>

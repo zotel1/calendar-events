@@ -1,0 +1,7 @@
+.calendar-container {
+
+    .calendar-content {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
