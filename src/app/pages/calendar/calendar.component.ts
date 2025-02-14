@@ -28,8 +28,9 @@ export class CalendarComponent {
     const firstDayInMonth = this.getSelectDate(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
     const daysPreviusMonth = this.getSelectDate(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
     
-    for (let index = 0; index <  firstDayInMonth; index++) {
-      this.calendarData.push({day: daysPreviusMonth - index})
+    //Adaptamos el for para poder ver la semana anterior al mes actual
+    for (let index = firstDayInMonth; index > 0; index--) {
+      this.calendarData.push({day: daysPreviusMonth - (index - 1)}); 
     }
     
     const daysInMonth = this.getSelectDate(this.date.getFullYear(),this.date.getMonth() + 1, 0).getDate();
