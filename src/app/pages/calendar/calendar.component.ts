@@ -12,7 +12,24 @@ export class CalendarComponent {
 
   headers: NCalendar.Header = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-  calendarData = new Array(42).fill(1);
+  private totalItems = 42;
+
+  private date = new Date();
+
+  calendarData: NCalendar.Body[] = [];
+
+  constructor() {
+    this.createCalendarData();
+  }
+
+  createCalendarData() {
+    //throw new Error('Method not implemented.');
+    console.log(this.getSelectDate(this.date.getFullYear(),this.date.getMonth(), 1))
+  }
+
+  private getSelectDate(year: number, month: number, day: number): Date {
+    return new Date(year, month, day);
+  }
 
   openModal(){
 
