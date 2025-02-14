@@ -4,11 +4,15 @@
 
     <article class="calendar-content">
         @for (header of headers; track header) {
-            <span>{{header}}</span>
+            <span class="calendar-header">{{header}}</span>
         }
 
         @for (item of calendarData; track item) {
-            <div>{{item}}</div>
+            <div calendar-body>
+                <span>
+                    {{item}}
+                </span>
+            </div>
         }
     </article>
 
