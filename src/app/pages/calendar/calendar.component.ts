@@ -24,7 +24,13 @@ export class CalendarComponent {
 
   createCalendarData() {
     //throw new Error('Method not implemented.');
-    console.log(this.getSelectDate(this.date.getFullYear(),this.date.getMonth(), 1))
+    const daysInMonth = this.getSelectDate(this.date.getFullYear(),this.date.getMonth() + 1, 0).getDate();
+
+    for (let index = 1; index <= daysInMonth; index++) {
+      this.calendarData.push({
+        day: index,
+      });
+    }
   }
 
   private getSelectDate(year: number, month: number, day: number): Date {
