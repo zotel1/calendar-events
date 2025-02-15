@@ -1,26 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule} from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 import { NCalendar } from '../../model/calendar.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-calendar',
-  imports: [MatButtonModule],
+  imports: [
+    MatButtonModule,
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatMenuModule
+  ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss'
 })
 export class CalendarComponent {
 
-  headers: NCalendar.Header = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-
+  
   private totalItems = 42;
 
   private date = new Date();
 
+  private findEvent = findEvent;
+
+  headers: NCalendar.Header = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
   calendarData: NCalendar.Body[] = [];
 
-  constructor() {
+  constructor(private readonly dialogService: DialogService) {
     this.createCalendarData();
+    effect(() => {
+      if (this.dialogService.getEvent) {
+        this.handleEvent(this.dialogService.getEvent);
+      }
+    });
   }
+
+
+  
 
   createCalendarData() {
     //throw new Error('Method not implemented.');
