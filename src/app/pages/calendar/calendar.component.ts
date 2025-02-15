@@ -4,7 +4,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { NCalendar } from '../../model/calendar.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-calendar',
@@ -40,35 +40,64 @@ export class CalendarComponent {
     });
   }
 
+  private handleEvent(item: NCalendar.IEvent) {
+    const newCalendarData = [...this.calendarData];
 
-  
+    const findEvent = this.findEvent(newCalendarData, item);
+
+    if(!findEvent) {
+      createEvent(newCalendarData, item); 
+    } else {
+      updateEvent(newCalendarData, item, findEvent);
+    }
+
+    this.calendarData = newCalendarData;
+  } 
 
   createCalendarData() {
-    //throw new Error('Method not implemented.');
 
-    const firstDayInMonth = this.getSelectDate(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
-    const daysPreviusMonth = this.getSelectDate(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
+    const firstDayInMonth = getSelectedDate(this.date, 1).getDay();
+    
+    const previusMonth = getSelectedDate(this.date).getDate();
     
     //Adaptamos el for para poder ver la semana anterior al mes actual
     for (let index = firstDayInMonth; index > 0; index--) {
-      this.calendarData.push({day: daysPreviusMonth - (index - 1)}); 
+      this.calendarData.push(templateCalendarData(previusMonth -  (index - 1), this.getSelectedDate(this.date, previusMonth - (index -1), -1))); 
     }
     
-    const daysInMonth = this.getSelectDate(this.date.getFullYear(),this.date.getMonth() + 1, 0).getDate();
+    const daysInMonth = getSelectedDate(this.date , 0, 1).getDate();
 
     for (let index = 1; index <= daysInMonth; index++) {
-      this.calendarData.push({
-        day: index,
-      });
+      const newDate = this.getSelectedDate(this.date, index);
+      
+      this.calendarData.push(
+        {
+          ...templateCalendarData(index, newDate),
+          isCurrentDay: formatDate(this.date) === formatDate(newDate),
+          isCurrentMonth: true,
+      }
+    );
+    }
+
+    const calendarLength = this.calendarData.length;
+
+    for (let index = 1; index <= (this.totalItems - calendarLength); index++) {
+      this.calendarData.push(templateCalendarData(index, getSelectedDate(this.date, index, 1)));
     }
   }
 
-  private getSelectDate(year: number, month: number, day: number): Date {
-    return new Date(year, month, day);
+  removeEvent(calendarIndex: number, eventIndex: number) {
+    const newCalendarData = [...this.calendarData];
+    newCalendarData[calendarIndex].events.splice(eventIndex, 1);
+    this.calendarData = newCalendarData;
   }
 
   openModal(){
+    this.dialogService.openDialog();
+  }
 
+  openModalEdit(event: NCalendar.IEvent) {
+    this.dialogService.openDialog(event);
   }
 
 }
