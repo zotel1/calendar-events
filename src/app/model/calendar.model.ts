@@ -3,5 +3,7 @@ export namespace NCalendar {
     
     export interface Body {
         day: number;
+        isCurrentDay: boolean;
+        isCurrentMonth: boolean;
     }
 }
