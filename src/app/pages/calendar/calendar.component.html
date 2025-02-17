@@ -28,7 +28,8 @@
                             </button>
                             <p>Fecha: {{event.date   date : 'YYYY/MM/dd'}}</p>
                             <div>
-                                <button mat-button color="primary"></button>
+                                <button mat-button color="primary" (click)="openModalEdit(event)">Editar</button>
+                                <button mat-button color="warn" (click)="removeEvent(calendarIndex, eventIndex)">Eliminar</button>
                             </div>
                         </section>
                     </mat-menu>
@@ -37,5 +38,4 @@
             </div>
         }
     </article>
-
 </section>
