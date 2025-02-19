@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { NCalendar } from '../model/calendar.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../shared/dialog/dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -8,5 +10,20 @@ export class DialogService {
 
   private dialogData =  signal<NCalendar.IEvent | null>(null);
 
-  constructor() { }
+  constructor(public dialog: MatDialog) {}
+
+  openDialog(data?: NCalendar.IEvent): void {
+    this.dialog.open(DialogComponent, {
+      data,
+      width: '70vw'
+    });
+  }
+
+  setEvent(item: NCalendar.IEvent) {
+    this.dialogData.set(item);
+  }
+
+  get getEvent() {
+    return this.dialogData();
+  }
 }
